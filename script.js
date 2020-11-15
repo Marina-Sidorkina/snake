@@ -1,29 +1,38 @@
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const squareSize = 30;
-const board = [
-  '###############',
-  '#             #',
-  '#             #',
-  '#             #',
-  '#    ####     #',
-  '#    ####     #',
-  '#             #',
-  '#             #',
-  '#             #',
-  '###############'
-];
-let currentYOffset = 0;
+const game = {
+  board: [
+    '###############',
+    '#             #',
+    '#             #',
+    '#             #',
+    '#    ####     #',
+    '#    ####     #',
+    '#             #',
+    '#             #',
+    '#             #',
+    '###############'
+  ]
+}
 
-board.forEach(function checkLine(line) {
-  line = line.split('');
-  let currentXOffset = 0;
-  line.forEach(function checkCharacter(character) {
-    if(character === '#') {
-      ctx.fillStyle = 'black';
-      ctx.fillRect(currentXOffset, currentYOffset, squareSize, squareSize);
-    }
-    currentXOffset += squareSize;
-  })
-  currentYOffset += squareSize;
-});
+const graphics = {
+  canvas: document.getElementById('canvas'),
+  squareSize: 30,
+  drawBoard: function() {
+    const ctx = canvas.getContext('2d');
+    let currentYOffset = 0;
+
+    game.board.forEach(function checkLine(line) {
+      line = line.split('');
+      let currentXOffset = 0;
+      line.forEach(function checkCharacter(character) {
+        if(character === '#') {
+          ctx.fillStyle = 'black';
+          ctx.fillRect(currentXOffset, currentYOffset, graphics.squareSize, graphics.squareSize);
+        }
+        currentXOffset += graphics.squareSize;
+      })
+      currentYOffset += graphics.squareSize;
+    });
+  }
+}
+
+graphics.drawBoard();
