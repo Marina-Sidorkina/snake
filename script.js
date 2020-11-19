@@ -10,7 +10,14 @@ const game = {
     '#             #',
     '#             #',
     '###############'
-  ]
+  ],
+  tickNumber: 0,
+  timer: 0;
+  tick: function() {
+    game.tickNumber++;
+    graphics.drawGame();
+    game.timer = window.setTimeout(game.tick, 500);
+  }
 }
 
 const snake = {
@@ -19,7 +26,8 @@ const snake = {
     {x: 3, y: 2},
     {x: 2, y: 2}
   ],
-  facing: 'E'
+  facing: 'E',
+  move: function() {}
 }
 
 const graphics = {
@@ -56,4 +64,11 @@ const graphics = {
   }
 }
 
+const gameControl = {
+  startGame: function() {
+    game.tick();
+  }
+}
+
 graphics.drawGame();
+gameControl.startGame();
