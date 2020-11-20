@@ -15,6 +15,7 @@ const game = {
   timer: 0,
   tick: function() {
     game.tickNumber++;
+    snake.move();
     graphics.drawGame();
     game.timer = window.setTimeout(game.tick, 500);
   }
@@ -27,7 +28,21 @@ const snake = {
     {x: 2, y: 2}
   ],
   facing: 'E',
-  move: function() {}
+  nextLocation: function() {
+    const snakeHead = snake.parts[0];
+    let targetX = snakeHead.x;
+    let targetY = snakeHead.y;
+    targetY = snake.facing === 'N' ? targetY - 1 : targetY;
+    targetY = snake.facing === 'S' ? targetY + 1 : targetY;
+    targetX = snake.facing === 'W' ? targetX - 1 : targetX;
+    targetX = snake.facing === 'E' ? targetX + 1 : targetX;
+    return {x: targetX, y: targetY};
+  },
+  move: function() {
+    const location = snake.nextLocation();
+    snake.parts.unshift(location);
+    snake.parts.pop();
+  }
 }
 
 const graphics = {
@@ -59,6 +74,7 @@ const graphics = {
   },
   drawGame: function() {
     const ctx = graphics.canvas.getContext('2d');
+    ctx.clearRect(0, 0, graphics.canvas.width, graphics.canvas.height);
     graphics.drawBoard(ctx);
     graphics.drawSnake(ctx);
   }
