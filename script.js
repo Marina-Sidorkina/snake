@@ -12,7 +12,7 @@ const game = {
     '###############'
   ],
   tickNumber: 0,
-  timer: 0;
+  timer: 0,
   tick: function() {
     game.tickNumber++;
     graphics.drawGame();
