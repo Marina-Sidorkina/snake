@@ -14,6 +14,7 @@ const game = {
   tickNumber: 0,
   timer: 0,
   tick: function() {
+    window.clearTimeout(game.timer);
     game.tickNumber++;
     snake.move();
     graphics.drawGame();
@@ -81,7 +82,18 @@ const graphics = {
 }
 
 const gameControl = {
+  processInput: function (keyPressed) {
+    const key = keyPressed.key.toLowerCase();
+    let targetDirection = snake.facing;
+    if(key == 'w') targetDirection = 'N';
+    if(key == 'a') targetDirection = 'W';
+    if(key == 's') targetDirection = 'S';
+    if(key == 'd') targetDirection = 'E';
+    snake.facing = targetDirection;
+    game.tick();
+  },
   startGame: function() {
+    window.addEventListener('keypress', gameControl.processInput, false)
     game.tick();
   }
 }
