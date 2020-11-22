@@ -32,6 +32,16 @@ const game = {
   },
   isWall: function(location) {
     return game.board[location.y][location.x] === '#';
+  },
+  isFruit: function(location) {
+    for(let fruitNumber = 0; fruitNumber < game.fruit.length; fruitNumber++) {
+      let fruit = game.fruit[fruitNumber];
+      if(location.x === fruit.x && location.y === fruit.y) {
+        game.fruit.splice(fruitNumber, 1)
+        return true;
+      }
+    }
+    return false;
   }
 }
 
@@ -60,6 +70,10 @@ const snake = {
     }
     if(game.isWall(location)) {
       return 'gameover';
+    }
+    if(game.isFruit(location)) {
+      snake.parts.unshift(location);
+      game.score++;
     }
   }
 }
