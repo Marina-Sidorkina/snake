@@ -11,6 +11,9 @@ const game = {
     '#             #',
     '###############'
   ],
+  fruit: [
+    {x: 1, y: 1}
+  ],
   tickNumber: 0,
   timer: 0,
   tick: function() {
@@ -80,19 +83,20 @@ const graphics = {
       currentYOffset += graphics.squareSize;
     });
   },
-  drawSnake: function(ctx) {
-    snake.parts.forEach(function drawPart(part) {
+  draw: function(ctx, source, color) {
+    source.forEach(function drawPart(part) {
       let partXLocation = part.x * graphics.squareSize;
       let partYLocation = part.y * graphics.squareSize;
-      ctx.fillStyle = 'green';
+      ctx.fillStyle = color;
       ctx.fillRect(partXLocation, partYLocation, graphics.squareSize, graphics.squareSize);
-    })
+    });
   },
   drawGame: function() {
     const ctx = graphics.canvas.getContext('2d');
     ctx.clearRect(0, 0, graphics.canvas.width, graphics.canvas.height);
     graphics.drawBoard(ctx);
-    graphics.drawSnake(ctx);
+    graphics.draw(ctx, snake.parts, 'green');
+    graphics.draw(ctx, game.fruit, 'red');
   }
 }
 
