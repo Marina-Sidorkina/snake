@@ -16,12 +16,19 @@ const game = {
   tick: function() {
     window.clearTimeout(game.timer);
     game.tickNumber++;
-    snake.move();
+    const result = snake.move();
+    if(result === 'gameover') {
+      alert('Игра окончена');
+      return;
+    }
     graphics.drawGame();
     game.timer = window.setTimeout(game.tick, 500);
   },
   isEmpty: function(location) {
     return game.board[location.y][location.x] === ' ';
+  },
+  isWall: function(location) {
+    return game.board[location.y][location.x] === '#';
   }
 }
 
@@ -47,6 +54,9 @@ const snake = {
     if(game.isEmpty(location)) {
       snake.parts.unshift(location);
       snake.parts.pop();
+    }
+    if(game.isWall(location)) {
+      return 'gameover';
     }
   }
 }
