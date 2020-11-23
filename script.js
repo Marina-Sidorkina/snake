@@ -19,6 +19,9 @@ const game = {
   tick: function() {
     window.clearTimeout(game.timer);
     game.tickNumber++;
+    if(game.tickNumber % 10 === 0) {
+      game.addRandomFruit();
+    }
     const result = snake.move();
     if(result === 'gameover') {
       alert('Игра окончена');
@@ -26,6 +29,15 @@ const game = {
     }
     graphics.drawGame();
     game.timer = window.setTimeout(game.tick, 500);
+  },
+  addRandomFruit: function() {
+    let randomY = Math.floor(Math.random() * game.board.length);
+    let randomX = Math.floor(Math.random() * game.board[randomY].length);
+    let randomLocation = {x: randomX, y: randomY};
+
+    if(game.isEmpty(randomLocation) && !game.isFruit(randomLocation)) {
+      game.fruit.push(randomLocation);
+    }
   },
   isEmpty: function(location) {
     return game.board[location.y][location.x] === ' ';
